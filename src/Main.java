@@ -145,25 +145,22 @@ class LinkedList {
         Node slow = head;
         Node fast = head;
 
-        // Previous pointer to track the node before slow
-        Node prev = null;
-
-        // Fast moves 2 at a time, slow moved 1 at a time. By time fast reaches end, slow will be in middle
-        // prev will be just before the middle in case of odd elements
-        while (fast != null && fast.next != null) {
-            fast = fast.next.next;
-            prev = slow;
+        // Move fast pointer two steps and slow pointer one step
+        // For odd length: fast will end at last node
+        // For even length: fast will end at null
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
+            fast = fast.next.next;
         }
 
-        // Create the front list (head to prev)
+        // Create the front list (head to slow)
         result[0].head = head;
 
-        // Create the back list (slow to end)
-        result[1].head = slow;
+        // Create the back list (slow.next to end)
+        result[1].head = slow.next;
 
         // Terminate the front list
-        prev.next = null;
+        slow.next = null;
 
         return result;
     }
